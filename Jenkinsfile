@@ -3,7 +3,7 @@ pipeline{
    stages{
       stage('SCM Checkout'){
          steps{
-            https://github.com/swapnilbp31/newmavenproject.git
+             git 'https://github.com/swapnilbp31/newmavenproject.git'
          }
       }
       stage('config Maven'){
