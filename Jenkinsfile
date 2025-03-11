@@ -7,9 +7,13 @@ pipeline {
       }
     }
 
-    stage('print your message') {
+    stage('validate the code') {
       steps {
-        sh 'echo hello'
+
+        withMaven(globalMavenSettingsConfig: '', jdk: 'JDK_HOME', maven: 'MVN_HOME', mavenSettingsConfig: '', traceability: true) {
+        sh 'mvn validate'
+        }
+        
       }
     }
 
