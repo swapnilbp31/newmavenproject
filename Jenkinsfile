@@ -1,21 +1,22 @@
-pipeline {
-  agent any
-  stages {
-    stage('scm checkout') {
-      steps {
-        git 'https://github.com/kumargaurav039/newmavenproject.git'
+Pipeline{
+   agent any
+   stages{
+      stage('SCM Checkout'){
+         steps{
+            https://github.com/swapnilbp31/newmavenproject.git
+         }
       }
-    }
-
-    stage('package the code') {
-      steps {
-
-        withMaven(globalMavenSettingsConfig: '', jdk: 'JDK_HOME', maven: 'MVN_HOME', mavenSettingsConfig: '', traceability: true) {
-        sh 'mvn clean package'
-        }
-        
+      stage('config Maven'){
+         steps{
+            withMaven(globalMavenSettingsConfig: '', jdk: 'JDK_Home', maven: 'Maven_Home', mavenSettingsConfig: '', traceability: true) {
+    sh 'mvn clean package'
+}
+         }
       }
-    }
-
-  }
+      stage('Package'){
+         steps{
+            echo 'Pakage Successfully'
+         }
+      }
+   } 
 }
