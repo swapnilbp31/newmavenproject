@@ -15,7 +15,15 @@ pipeline{
       }
       stage('Package'){
          steps{
-            echo 'Pakage deployed Successfull'
+            echo 'Pakage  Successfull'
+         }
+      }
+      stage('deploy'){
+         steps{
+            sshagent(['CICD']) {
+    sh 'scp -o StrictHostKeyChecking=no webapp/target/webapp.war ec2-user@172.31.93.153:/usr/share/tomcat/webapps'
+
+}
          }
       }
    } 
