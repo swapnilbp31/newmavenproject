@@ -18,13 +18,19 @@ pipeline{
             echo 'Pakage  Successfull'
          }
       }
-      stage('deploy'){
-         steps{
-            sshagent(['CICD']) {
-    sh 'scp -o StrictHostKeyChecking=no webapp/target/webapp.war ec2-user@172.31.93.153:/usr/share/tomcat/webapps'
-
-}
-         }
+       stage('create docker image') {
+      steps {
+        sh 'docker build -t e31531469/devops923:latest .'
+      }
+    }
+    stage('push docker image to dockerhub') {
+      steps {
+        
+        withDockerRegistry(credentialsId: 'Docker_hub_Cred', url: 'https://index.docker.io/v1/') {
+            
+                sh 'docker push e31531469/devops923:latest'
+            
+        }
       }
    } 
 }

@@ -1,6 +1,4 @@
-FROM tomcat:latest
-LABEL author=prakash
-WORKDIR /usr/local/tomcat/webapps
-COPY webapp/target/webapp.war .
-EXPOSE 8080
-CMD ["catalina.sh", "run"]
+FROM tomcat:10.1.15-jdk21
+LABEL author=ethans
+RUN apt-get update -y
+COPY webapp/target/webapp.war /usr/local/tomcat/webapps/
