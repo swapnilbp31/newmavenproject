@@ -26,7 +26,7 @@ pipeline{
     stage('push docker image to dockerhub') {
       steps {
         
-        withDockerRegistry(credentialsId: 'Docker_hub_Cred', url: 'https://index.docker.io/v1/') {
+        withDockerRegistry(credentialsId: 'Docker_hub', url: 'https://index.docker.io/v1/') {
             
                 sh 'docker push e31531469/devops923:latest'
             
