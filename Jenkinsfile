@@ -20,7 +20,7 @@ pipeline{
       }
        stage('create docker image') {
       steps {
-        sh 'docker build -t swapnilbp/devops9233:latest .'
+        sh 'docker build -t swapnilbp/devops923:v1 .'
       }
     }
     stage('push docker image to dockerhub') {
