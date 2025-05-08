@@ -43,16 +43,5 @@ stage('deploy to Kubernetes') {
         }
     }
 }
-
-stage('verify deployment') {
-      post {
-         success {
-            echo 'Pipeline completed successfully!'
-         }
-         failure {
-            echo 'Pipeline failed!'
-         }
-}
-}
 }
 }
