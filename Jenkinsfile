@@ -33,21 +33,6 @@ pipeline{
         }
       }
    } 
- 
-stage('create docker image') {
-    steps {
-        sh 'docker build -t swapnilbp/devops9233:latest .'
-    }
-}
-
-stage('push docker image to dockerhub') {
-    steps {
-        withDockerRegistry(credentialsId: 'Docker_hub', url: 'https://index.docker.io/v1/') {
-            sh 'docker push swapnilbp/devops9233:latest'
-        }
-    }
-}
-
 stage('deploy to Kubernetes') {
     steps {
         withKubeConfig(credentialsId: 'Kubernetes_Credentials') {
