@@ -28,10 +28,46 @@ pipeline{
         
         withDockerRegistry(credentialsId: 'Docker_hub', url: 'https://index.docker.io/v1/') {
             
-                sh 'docker push swapnilbp/devops9233:latest'
+                sh 'docker push swapnilbp/devops923:v1'
             
         }
       }
    } 
+ 
+stage('create docker image') {
+    steps {
+        sh 'docker build -t swapnilbp/devops9233:latest .'
+    }
+}
+
+stage('push docker image to dockerhub') {
+    steps {
+        withDockerRegistry(credentialsId: 'Docker_hub', url: 'https://index.docker.io/v1/') {
+            sh 'docker push swapnilbp/devops9233:latest'
+        }
+    }
+}
+
+stage('deploy to Kubernetes') {
+    steps {
+        withKubeConfig(credentialsId: 'Kubernetes_Credentials') {
+            sh '''
+                kubectl apply -f service.yaml
+                kubectl set image deployment/<your-deployment-name> <container-name>=swapnilbp/devops9233:latest
+            '''
+        }
+    }
+}
+
+stage('verify deployment') {
+      post {
+         success {
+            echo 'Pipeline completed successfully!'
+         }
+         failure {
+            echo 'Pipeline failed!'
+         }
+}
+}
 }
 }

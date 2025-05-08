@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment                        #type of kubernetes resource
+metadata:
+  name: nginx-deployment
+  labels:                 	#deployment label
+    app: nginx
+spec:
+  replicas: 3              	#create 3 pod
+  selector:
+    matchLabels:           	# pod label
+      app: nginx
+      appname: synchronization
+      day: tuesday
+  template:                	#container property
+    metadata:
+      labels:
+        app: nginx
+        appname: synchronization
+        day: tuesday
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.14.2
+          ports:
+          - containerPort: 80
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service1
+spec:
+  selector:          	# selector value should match with
+    app: nginx         	#deployment matchLabels
+    appname: synchronization
+    day: tuesday
+  ports:
+   - protocol: TCP
+     port: 80            		 #application port
+     targetPort: 80      		 #application port
+  type: NodePort           		 #ClusterIP, NodePort, LoadBalancer 
