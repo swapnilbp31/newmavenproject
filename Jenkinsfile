@@ -33,15 +33,12 @@ pipeline{
         }
       }
    } 
-stage('deploy to Kubernetes') {
-    steps {
-        withKubeConfig(credentialsId: 'Kubernetes_Credentials') {
-            sh '''
-                kubectl apply -f service.yaml
-                kubectl set image deployment/<your-deployment-name> <container-name>=swapnilbp/devops9233:latest
-            '''
+ stage('Deploying App to Kubernetes') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "deploymentservice.yml", kubeconfigId: "kubernetes")
         }
+      }
     }
-}
 }
 }

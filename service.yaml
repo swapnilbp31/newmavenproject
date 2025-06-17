@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment                        #type of kubernetes resource
 metadata:
-  name: nginx-deployment
+  name: tomcat-deployment
   labels:                 	#deployment label
-    app: nginx
+    app: tomcat
 spec:
   replicas: 3              	#create 3 pod
   selector:
     matchLabels:           	# pod label
-      app: nginx
+      app: tomcat
       appname: synchronization
       day: tuesday
   template:                	#container property
     metadata:
       labels:
-        app: nginx
+        app: tomcat
         appname: synchronization
         day: tuesday
     spec:
       containers:
-        - name: nginx
-          image: nginx:1.14.2
+        - name: tomcat
+          image: tomcat:10.1.15-jdk21
           ports:
-          - containerPort: 80
+          - containerPort: 8080
 ---
 
 apiVersion: v1
@@ -31,7 +31,7 @@ metadata:
   name: my-service1
 spec:
   selector:          	# selector value should match with
-    app: nginx         	#deployment matchLabels
+    app: tomcat         	#deployment matchLabels
     appname: synchronization
     day: tuesday
   ports:
