@@ -36,6 +36,6 @@ spec:
     day: tuesday
   ports:
    - protocol: TCP
-     port: 80            		 #application port
-     targetPort: 80      		 #application port
+     port: 8080            		 #application port
+     targetPort: 8080      		 #application port
   type: NodePort           		 #ClusterIP, NodePort, LoadBalancer 
