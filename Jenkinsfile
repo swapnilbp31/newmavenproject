@@ -51,22 +51,5 @@ pipeline {
     }
        }
 }}
-        stage('Deploy to Kubernetes') {
-            steps {
-                script {
-                    sh '''
-                    # Write kubeconfig content to a temporary file
-                    echo "$KUBECONFIG_CONTENT" > kubeconfig
-                    chmod 600 kubeconfig
-                    
-                    # Apply Kubernetes configuration
-                    kubectl apply -f service.yaml --kubeconfig=kubeconfig
-
-                    # Clean up temporary file
-                    rm -f kubeconfig
-                    '''
-                }
-            }
-        }
     }
 }
