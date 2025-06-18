@@ -1,4 +1,7 @@
 pipeline{
+    environment {
+        KUBECONFIG = credentials('K8S') // Use your kubeconfig file ID
+    }
    agent any
    stages{
       stage('SCM Checkout'){
@@ -33,9 +36,7 @@ pipeline{
         }
       }
    } 
-  environment {
-        KUBECONFIG = credentials('K8S') // Use your kubeconfig file ID
-    }
+ 
     stages {
         stage('Deploy to Kubernetes') {
             steps {
