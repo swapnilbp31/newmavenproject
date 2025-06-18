@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        KUBECONFIG = credentials('K8S') // Use your Secret Text credential ID
+        KUBECONFIG = credentials('Jenkins_Key') // Use your Secret Text credential ID
     }
     stages {
         stage('SCM Checkout') {
