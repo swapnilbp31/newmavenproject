@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        KUBECONFIG_CONTENT = credentials('Jenkins_Key') // Use your kubeconfig Secret Text credential ID
+        KUBECONFIG_CONTENT = credentials('Jenkins_Key') // Your kubeconfig Secret Text credential ID
     }
     stages {
         stage('SCM Checkout') {
@@ -30,6 +30,17 @@ pipeline {
             steps {
                 withDockerRegistry(credentialsId: 'Docker_hub', url: 'https://index.docker.io/v1/') {
                     sh 'docker push swapnilbp/devops923:v2'
+                }
+            }
+        }
+        stage('Debug Kubeconfig') {
+            steps {
+                script {
+                    sh '''
+                    echo "$KUBECONFIG_CONTENT" > kubeconfig
+                    echo "Debugging kubeconfig file:"
+                    cat kubeconfig
+                    '''
                 }
             }
         }
