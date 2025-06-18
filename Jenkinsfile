@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        KUBECONFIG = credentials('Jenkins_Key') // Use your Secret Text credential ID
+        KUBECONFIG = credentials('Jenkins_Key') // Use your kubeconfig file ID
     }
     stages {
         stage('SCM Checkout') {
@@ -36,13 +36,9 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // Write kubeconfig to a temporary file
                     sh '''
-                    echo "$KUBECONFIG" > kubeconfig
-                    chmod 600 kubeconfig
-                    kubectl get nodes --kubeconfig=kubeconfig
-                    kubectl apply -f deployment.yaml --kubeconfig=kubeconfig
-                    rm -f kubeconfig
+                    
+                    kubectl apply -f service.yaml
                     '''
                 }
             }
