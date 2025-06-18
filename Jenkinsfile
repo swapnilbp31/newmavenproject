@@ -33,12 +33,20 @@ pipeline{
         }
       }
    } 
- stage('Deploying App to Kubernetes') {
-      steps {
-        script {
-          kubernetesDeploy(configs: "service.yml", kubeconfigId: "K8S")
-        }
-      }
+  environment {
+        KUBECONFIG = credentials('K8S') // Use your kubeconfig file ID
     }
+    stages {
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    sh '''
+                    kubectl apply -f deployment.yaml
+                    kubectl apply -f service.yaml
+                    '''
+                }
+            }
+        }
+}
 }
 }
