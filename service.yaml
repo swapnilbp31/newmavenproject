@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: tomcat
-          image: tomcat:10.1.15-jdk21
+          image: swapnilbp/devops923:v2
           ports:
           - containerPort: 8080
 ---

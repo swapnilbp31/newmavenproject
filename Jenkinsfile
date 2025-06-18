@@ -20,7 +20,7 @@ pipeline{
       }
        stage('create docker image') {
       steps {
-        sh 'docker build -t swapnilbp/devops923:v1 .'
+        sh 'docker build -t swapnilbp/devops923:v2 .'
       }
     }
     stage('push docker image to dockerhub') {
@@ -28,7 +28,7 @@ pipeline{
         
         withDockerRegistry(credentialsId: 'Docker_hub', url: 'https://index.docker.io/v1/') {
             
-                sh 'docker push swapnilbp/devops923:v1'
+                sh 'docker push swapnilbp/devops923:v2'
             
         }
       }
