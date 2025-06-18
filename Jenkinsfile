@@ -36,11 +36,14 @@ pipeline {
         stage('Debug Kubeconfig') {
     steps {
         script {
-            sh '''
-            echo "$KUBECONFIG_CONTENT" > kubeconfig
-            echo "Debugging kubeconfig file:"
-            cat kubeconfig
-            '''
+            withCredentials([string(credentialsId: 'Jenkins_Key', variable: 'KUBECONFIG_CONTENT')]) {
+                writeFile file: 'kubeconfig', text: KUBECONFIG_CONTENT
+
+                // Display kubeconfig content for debugging (redact sensitive data manually in Jenkins logs)
+                sh '''
+                echo "Debugging kubeconfig file:"
+                cat kubeconfig
+                '''
         }
     }
 }
