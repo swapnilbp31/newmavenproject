@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        KUBECONFIG = credentials('K8S') // Use your kubeconfig file ID
+        KUBECONFIG = credentials('K8S') // Use your Secret Text credential ID
     }
     stages {
         stage('SCM Checkout') {
@@ -33,21 +33,19 @@ pipeline {
                 }
             }
         }
-        stages {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // Write the kubeconfig content to a temporary file
+                    // Write kubeconfig to a temporary file
                     sh '''
-                    echo "$KUBECONFIG_CONTENT" > kubeconfig
+                    echo "$KUBECONFIG" > kubeconfig
                     chmod 600 kubeconfig
                     kubectl get nodes --kubeconfig=kubeconfig
-                    kubectl apply -f service.yaml --kubeconfig=kubeconfig
+                    kubectl apply -f deployment.yaml --kubeconfig=kubeconfig
                     rm -f kubeconfig
                     '''
                 }
             }
         }
-    }
     }
 }
