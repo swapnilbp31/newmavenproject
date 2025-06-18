@@ -34,16 +34,16 @@ pipeline {
             }
         }
         stage('Debug Kubeconfig') {
-            steps {
-                script {
-                    sh '''
-                    echo "$KUBECONFIG_CONTENT" > kubeconfig
-                    echo "Debugging kubeconfig file:"
-                    cat kubeconfig
-                    '''
-                }
-            }
+    steps {
+        script {
+            sh '''
+            echo "$KUBECONFIG_CONTENT" > kubeconfig
+            echo "Debugging kubeconfig file:"
+            cat kubeconfig
+            '''
         }
+    }
+}
         stage('Deploy to Kubernetes') {
             steps {
                 script {
