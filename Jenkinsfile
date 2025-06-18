@@ -36,14 +36,21 @@ pipeline {
         stage('Debug Kubeconfig') {
     steps {
        script {
-            sh '''
-            echo "$KUBECONFIG_CONTENT" > kubeconfig
-            echo "Debugging kubeconfig file:"
-            cat kubeconfig
-            '''
+           withCredentials([string(credentialsId: 'Jenkins_Key', variable: 'KUBECONFIG_CONTENT')]) {
+            script {
+                // Write kubeconfig content to a file
+                writeFile file: 'kubeconfig', text: KUBECONFIG_CONTENT
+                
+                // Set permissions and apply configuration
+                sh '''
+                chmod 600 kubeconfig
+                kubectl apply -f service.yaml --kubeconfig=kubeconfig
+                rm -f kubeconfig
+                '''
         }
     }
-}
+       }
+}}
         stage('Deploy to Kubernetes') {
             steps {
                 script {
